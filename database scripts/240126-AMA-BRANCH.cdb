@@ -1,0 +1,17 @@
+CREATE TABLE AMA_BRANCH_TAB (
+    Branch_Id NUMBER,
+    Branch_Name VARCHAR2(200),
+    Branch_Address VARCHAR2(4000),
+    Branch_Manager VARCHAR2(200),
+    Total_Warehouse_capacity NUMBER,
+    Company_Reg_No NUMBER,
+    Container_Id NUMBER,
+    PRIMARY KEY (Company_Reg_No, Branch_Id,Container_Id)
+);
+
+CREATE SEQUENCE BRANCH_SEQ
+	START WITH 1
+	INCREMENT BY 1
+	NOCACHE
+	NOCYCLE;
+

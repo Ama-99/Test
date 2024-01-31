@@ -1,0 +1,56 @@
+CREATE OR REPLACE PACKAGE BODY AMA_CONTAINER_API AS
+   PROCEDURE INSERT_CONTAINER(
+      Container_Id_ IN NUMBER DEFAULT NULL,
+      Current_Weight_ IN NUMBER,
+      Max_Volume_ IN FLOAT,
+      Max_Weight_ IN FLOAT,
+      Current_Volume_ IN FLOAT,
+      Branch_Id_ IN NUMBER,
+      Company_Reg_No_ IN NUMBER
+   ) IS
+      v_Container_Id NUMBER;
+   BEGIN
+      
+      IF Container_Id_ IS NULL THEN
+         SELECT CONTAINER_SEQ.NEXTVAL INTO v_Container_Id FROM DUAL;
+      ELSE
+         v_Container_Id := Container_Id_;
+      END IF;
+
+      INSERT INTO AMA_CONTAINER_TAB (
+         Container_Id,
+         Current_Weight,
+         Max_Volume,
+         Max_Weight,
+         Current_Volume,
+         Branch_Id,
+         Company_Reg_No
+      )
+      VALUES (
+         v_Container_Id,
+         Current_Weight_,
+         Max_Volume_,
+         Max_Weight_,
+         Current_Volume_,
+         Branch_Id_,
+         Company_Reg_No_
+      );
+   END INSERT_CONTAINER;
+   
+   FUNCTION GET_MAX_WEIGHT(CONTAINER_Id_ IN NUMBER) RETURN FLOAT IS
+        result_ FLOAT;
+             
+        CURSOR get_max_weight IS 
+            SELECT Max_Weight
+            FROM AMA_CONTAINER_TAB
+            WHERE CONTAINER_Id = CONTAINER_Id_;   
+    BEGIN
+        OPEN get_max_weight;
+        FETCH get_max_weight INTO result_;
+        CLOSE get_max_weight;
+        RETURN result_;
+    END GET_MAX_WEIGHT;
+    
+    
+END AMA_CONTAINER_API;
+/

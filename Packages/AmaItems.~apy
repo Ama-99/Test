@@ -1,0 +1,98 @@
+CREATE OR REPLACE PACKAGE BODY AMA_ITEMS_API AS
+   PROCEDURE INSERT_ITEMS(
+      Item_Id_ IN VARCHAR2 DEFAULT NULL,
+      Item_Name_ IN VARCHAR2,
+      Available_Qty_KG_ IN FLOAT,
+      Scrapped_qty_KG_ IN FLOAT,
+      Reserved_Qty_KG_ IN FLOAT
+   )IS
+   v_Item_Id NUMBER;
+   BEGIN
+      
+      IF Item_Id_ IS NULL THEN
+         SELECT ITEMS_SEQ.NEXTVAL INTO v_Item_Id FROM DUAL;
+      ELSE
+         v_Item_Id := Item_Id_;
+      END IF;
+
+      INSERT INTO AMA_ITEMS_TAB (
+         Item_Id,
+         Item_Name,
+         Available_Qty_KG,
+         Scrapped_qty_KG,
+         Reserved_Qty_KG
+      )
+      VALUES (
+         Item_Id_,
+         Item_Name_,
+         Available_Qty_KG_,
+         Scrapped_qty_KG_,
+         Reserved_Qty_KG_
+      );
+   END INSERT_ITEMS;
+   
+   
+   --GET ITEM NAME
+   FUNCTION GET_ITEM_NAME(Item_Id_ IN NUMBER) RETURN VARCHAR2 IS
+        result_ VARCHAR2(200);
+             
+        CURSOR get_item_name IS 
+            SELECT Item_Name
+            FROM AMA_ITEMS_TAB
+            WHERE Item_Id = Item_Id_;   
+    BEGIN
+        OPEN get_item_name;
+        FETCH get_item_name INTO result_;
+        CLOSE get_item_name;
+        RETURN result_;
+    END GET_ITEM_NAME;
+    
+    
+   --GET AVAILABLE QUANTITY
+   FUNCTION GET_AVAILABLE_QTY(Item_Id_ IN NUMBER) RETURN FLOAT IS
+        result_ FLOAT;
+             
+        CURSOR get_qty IS 
+            SELECT Available_Qty_KG
+            FROM AMA_ITEMS_TAB
+            WHERE Item_Id = Item_Id_;   
+    BEGIN
+        OPEN get_qty;
+        FETCH get_qty INTO result_;
+        CLOSE get_qty;
+        RETURN result_;
+    END GET_AVAILABLE_QTY;
+    
+    --GET SCRAPPED QUANTITY
+   FUNCTION GET_SRAPPED_QTY(Item_Id_ IN NUMBER) RETURN FLOAT IS
+        result_ FLOAT;
+             
+        CURSOR get_qty IS 
+            SELECT Scapped_Qty_KG
+            FROM AMA_ITEMS_TAB
+            WHERE Item_Id = Item_Id_;   
+    BEGIN
+        OPEN get_qty;
+        FETCH get_qty INTO result_;
+        CLOSE get_qty;
+        RETURN result_;
+    END GET_SRAPPED_QTY;
+    
+    --GET RESERVED QUANTITY
+   FUNCTION GET_RESERVED_QTY(Item_Id_ IN NUMBER) RETURN FLOAT IS
+        result_ FLOAT;
+             
+        CURSOR get_qty IS 
+            SELECT Reserved_Qty_KG
+            FROM AMA_ITEMS_TAB
+            WHERE Item_Id = Item_Id_;   
+    BEGIN
+        OPEN get_qty;
+        FETCH get_qty INTO result_;
+        CLOSE get_qty;
+        RETURN result_;
+    END GET_RESERVED_QTY;
+    
+    
+END AMA_ITEMS_API;
+/

@@ -1,0 +1,9 @@
+CREATE TABLE AMA_STORAGE_TAB (
+    Storage_Id VARCHAR2(100),
+    Item_Id VARCHAR2(100),
+    Container_Id NUMBER,
+    Branch_Id NUMBER,
+    Status VARCHAR2(100),
+    PRIMARY KEY (Storage_Id), 
+);
+

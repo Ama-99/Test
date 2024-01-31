@@ -1,0 +1,15 @@
+CREATE OR REPLACE PACKAGE AMA_CONTAINER_API AS
+   PROCEDURE INSERT_CONTAINER(
+      Container_Id_ IN NUMBER DEFAULT NULL,
+      Current_Weight_ IN NUMBER,
+      Max_Volume_ IN FLOAT,
+      Max_Weight_ IN FLOAT,
+      Current_Volume_ IN FLOAT,
+      Branch_Id_ IN NUMBER,
+      Company_Reg_No_ IN NUMBER
+   );
+   
+   FUNCTION GET_MAX_WEIGHT(CONTAINER_Id_ IN NUMBER) RETURN FLOAT;
+    
+END AMA_CONTAINER_API;
+/
