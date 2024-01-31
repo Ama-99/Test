@@ -1,0 +1,63 @@
+CREATE OR REPLACE PACKAGE BODY AMA_COMPANY_API AS
+    PROCEDURE INSERT_COMPANY(
+        Company_Name_ IN VARCHAR2,
+        Company_Address_ IN VARCHAR2
+    ) IS
+        Company_Reg_No_ NUMBER;
+    BEGIN
+        SELECT COMPANY_SEQ.NEXTVAL INTO Company_Reg_No_ FROM DUAL;
+        INSERT INTO AMA_COMPANY_TAB (
+            Company_Reg_No,
+            Company_Name,
+            Company_Address
+        ) VALUES (
+            Company_Reg_No_,
+            Company_Name_,
+            Company_Address_
+        );
+    END INSERT_COMPANY;
+    
+    FUNCTION GET_COMPANY_NAME(Company_Reg_No_ IN NUMBER) RETURN VARCHAR2 IS
+        result_ VARCHAR2(200);
+             
+        CURSOR get_comp_name IS 
+            SELECT Company_Name
+            FROM AMA_COMPANY_TAB
+            WHERE Company_Reg_No = Company_Reg_No_;   
+    BEGIN
+        OPEN get_comp_name;
+        FETCH get_comp_name INTO result_;
+        CLOSE get_comp_name;
+        RETURN result_;
+    END GET_COMPANY_NAME;
+    
+    FUNCTION GET_COMPANY_ADRRESS(Company_Reg_No_ IN NUMBER) RETURN VARCHAR2 IS
+        result_ VARCHAR2(4000);
+             
+        CURSOR get_comp_address IS 
+            SELECT Company_Address
+            FROM AMA_COMPANY_TAB
+            WHERE Company_Reg_No = Company_Reg_No_;   
+    BEGIN
+        OPEN get_comp_address;
+        FETCH get_comp_address INTO result_;
+        CLOSE get_comp_address;
+        RETURN result_;
+    END GET_COMPANY_ADRRESS;
+    
+    FUNCTION GET_COMPANY_INFORMATION(Company_Reg_No_ IN NUMBER) RETURN VARCHAR2 IS
+        Company_Name_ VARCHAR2(200);
+        Company_Address_ VARCHAR2(200);
+    BEGIN
+        SELECT Company_Name, Company_Address
+        INTO Company_Name_, Company_Address_
+        FROM AMA_COMPANY_TAB
+        WHERE Company_Reg_No = Company_Reg_No_;
+
+        RETURN 'Registration No: ' || TO_CHAR(Company_Reg_No_) ||
+               ', Company Name: ' || Company_Name_ ||
+               ', Address: ' || Company_Address_;
+    END GET_COMPANY_INFORMATION;
+     
+END AMA_COMPANY_API;
+/

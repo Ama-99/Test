@@ -1,0 +1,23 @@
+CREATE OR REPLACE PACKAGE BODY AMA_STORAGE_API AS
+   PROCEDURE INSERT_STORAGE(
+      Storage_Id_ IN VARCHAR2,
+      Container_Id_ IN NUMBER,
+      Item_Id_ IN VARCHAR2,
+      Status_ IN VARCHAR2
+   ) IS
+   BEGIN
+      INSERT INTO AMA_STORAGE_TAB (
+         Storage_Id,
+         Container_Id,
+         Item_Id,
+         Status
+      )
+      VALUES (
+         Storage_Id_,
+         Container_Id_,
+         Item_Id_,
+         Status_
+      );
+   END INSERT_STORAGE;
+END AMA_STORAGE_API;
+/

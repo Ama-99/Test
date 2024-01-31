@@ -63,12 +63,13 @@ CREATE OR REPLACE PACKAGE BODY AMA_ITEMS_API AS
         RETURN result_;
     END GET_AVAILABLE_QTY;
     
+    
     --GET SCRAPPED QUANTITY
-   FUNCTION GET_SRAPPED_QTY(Item_Id_ IN NUMBER) RETURN FLOAT IS
+   FUNCTION GET_SCRAPPED_QTY(Item_Id_ IN NUMBER) RETURN FLOAT IS
         result_ FLOAT;
              
         CURSOR get_qty IS 
-            SELECT Scapped_Qty_KG
+            SELECT Scrapped_Qty_KG
             FROM AMA_ITEMS_TAB
             WHERE Item_Id = Item_Id_;   
     BEGIN
@@ -76,7 +77,8 @@ CREATE OR REPLACE PACKAGE BODY AMA_ITEMS_API AS
         FETCH get_qty INTO result_;
         CLOSE get_qty;
         RETURN result_;
-    END GET_SRAPPED_QTY;
+    END GET_SCRAPPED_QTY;
+    
     
     --GET RESERVED QUANTITY
    FUNCTION GET_RESERVED_QTY(Item_Id_ IN NUMBER) RETURN FLOAT IS
